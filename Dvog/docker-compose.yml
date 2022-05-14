@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  dvog.api:
+    image: ${DOCKER_REGISTRY-}dvogapi
+    build:
+      context: .
+      dockerfile: Dvog.API/Dockerfile
