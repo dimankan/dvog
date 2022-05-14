@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dvog.API", "Dvog.API\Dvog.API.csproj", "{53E50E0B-7993-460C-A2DD-54D2412C4801}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dvog.BL", "Dvog.BL\Dvog.BL.csproj", "{8006CA12-D866-43B4-AC81-BD5CF1C7C646}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dvog.DataAccess", "Dvog.DataAccess\Dvog.DataAccess.csproj", "{B764984F-9014-4C13-91AC-9352648CBA9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dvog.Domain", "Dvog.Domain\Dvog.Domain.csproj", "{1A765F76-6308-4D15-9D9D-456B9AD3FDEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dvog.UnitTests", "Dvog.UnitTests\Dvog.UnitTests.csproj", "{3AFAB96D-78EA-41A3-8FBA-BD18271E1186}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dvog.IntegrationTests", "Dvog.IntegrationTests\Dvog.IntegrationTests.csproj", "{33293A7B-F921-4863-B73F-D9D0705C6083}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53E50E0B-7993-460C-A2DD-54D2412C4801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53E50E0B-7993-460C-A2DD-54D2412C4801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53E50E0B-7993-460C-A2DD-54D2412C4801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53E50E0B-7993-460C-A2DD-54D2412C4801}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8006CA12-D866-43B4-AC81-BD5CF1C7C646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8006CA12-D866-43B4-AC81-BD5CF1C7C646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8006CA12-D866-43B4-AC81-BD5CF1C7C646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8006CA12-D866-43B4-AC81-BD5CF1C7C646}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B764984F-9014-4C13-91AC-9352648CBA9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B764984F-9014-4C13-91AC-9352648CBA9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B764984F-9014-4C13-91AC-9352648CBA9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B764984F-9014-4C13-91AC-9352648CBA9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A765F76-6308-4D15-9D9D-456B9AD3FDEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A765F76-6308-4D15-9D9D-456B9AD3FDEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A765F76-6308-4D15-9D9D-456B9AD3FDEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A765F76-6308-4D15-9D9D-456B9AD3FDEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AFAB96D-78EA-41A3-8FBA-BD18271E1186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AFAB96D-78EA-41A3-8FBA-BD18271E1186}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AFAB96D-78EA-41A3-8FBA-BD18271E1186}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AFAB96D-78EA-41A3-8FBA-BD18271E1186}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33293A7B-F921-4863-B73F-D9D0705C6083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33293A7B-F921-4863-B73F-D9D0705C6083}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33293A7B-F921-4863-B73F-D9D0705C6083}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33293A7B-F921-4863-B73F-D9D0705C6083}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
