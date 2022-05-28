@@ -104,6 +104,10 @@ dotnet_diagnostic.SA1600.severity = none
 
 # SA1633: File should have header
 dotnet_diagnostic.SA1633.severity = none
+csharp_style_conditional_delegate_call = true:suggestion
+
+# SA1200: Using directives should be placed correctly
+dotnet_diagnostic.SA1200.severity = none
 
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
