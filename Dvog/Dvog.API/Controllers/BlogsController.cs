@@ -1,4 +1,5 @@
-﻿using Dvog.API.Contracts;
+﻿using CSharpFunctionalExtensions;
+using Dvog.API.Contracts;
 using Dvog.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,11 +51,13 @@ namespace Dvog.API.Controllers
         }
 
         [HttpPut("{blogId:int}")]
-        public async Task<IActionResult> Update([FromRoute] int blogId)
+        public async Task<IActionResult> Update([FromRoute] int blogId, UpdateBlogRequest request)
         {
             _logger.LogInformation($"Начало обновления конкретного блога с идентификатором: {blogId}");
 
-            var result = BlogsRepository.Update(blogId);
+            var updatedBlog = Blog.Create(request.Title, request.Text);
+
+            var result = BlogsRepository.Update(blogId, updatedBlog);
 
             return Ok(result);
         }
@@ -78,8 +81,11 @@ namespace Dvog.API.Controllers
         public static int Add(Blog newBlog)
         {
             _latestId++;
+
             var blog = newBlog with { Id = _latestId };
+
             _blogs.Add(blog.Id, blog);
+
             return blog.Id;
         }
 
@@ -99,53 +105,34 @@ namespace Dvog.API.Controllers
         {
             string result = string.Empty;
 
-            try
+            if (!_blogs.TryGetValue(idBlog, out var blog))
             {
-                var blog = _blogs[idBlog];
-                result += $"\nId: {blog.Id}\nЗаголовок: {blog.Title}.\nТекст: {blog.Text}\n---Конец блога---\n\n";
+                return $"Блога с идентификатором {idBlog} не существует";
             }
-            catch (Exception ex)
-            {
-                if (_blogs.Count < idBlog)
-                {
-                    result = $"Блога с идентификатором {idBlog} не существует";
-                }
-                else
-                {
-                    result = $"Ошибка получения блога\n{ex.Message}";
-                }
-            }
+
+            result += $"\nId: {blog.Id}\nЗаголовок: {blog.Title}.\nТекст: {blog.Text}\n---Конец блога---\n\n";
 
             return result;
         }
 
-        public static string Update(int idBlog)
+        public static string Update(int idBlog, Result<Blog> updatedBlog)
         {
             string result = string.Empty;
 
-            try
+            //var blog = _blogs[idBlog];
+            if (!_blogs.TryGetValue(idBlog, out var blog))
             {
-                var blog = _blogs[idBlog];
-
-                var newBlog = Blog.Create(blog.Title + " " + DateTime.Now, blog.Text + " " + DateTime.Now);
-                newBlog = newBlog.Value with { Id = idBlog };
-
-                _blogs[idBlog] = newBlog.Value;
-
-                result = $"Блог с идентификатором {idBlog} обновлен";
-
+                return $"Блога с идентификатором {idBlog} не существует";
             }
-            catch (Exception ex)
-            {
-                if (_blogs.Count < idBlog)
-                {
-                    result = $"Блога c идентификатором {idBlog} не существует";
-                }
-                else
-                {
-                    result = $"Ошибка обновления блога\n{ex.Message}";
-                }
-            }
+
+            //var newBlog = Blog.Create(blog.Title + " " + DateTime.Now, blog.Text + " " + DateTime.Now);
+            //newBlog = newBlog.Value with { Id = idBlog };
+            //_blogs[idBlog] = newBlog.Value;
+
+            // Тут снова Value!!!
+            _blogs[idBlog] = updatedBlog.Value with { Id = blog.Id };
+
+            result = $"Блог с идентификатором {idBlog} обновлен";
 
             return result;
         }
@@ -154,20 +141,13 @@ namespace Dvog.API.Controllers
         {
             string result = string.Empty;
 
-            try
+            if (!_blogs.ContainsKey(idBlog))
             {
-                if (!_blogs.ContainsKey(idBlog))
-                {
-                    return $"Блога c идентификатором {idBlog} не существует";
-                }
+                return $"Блога c идентификатором {idBlog} не существует";
+            }
 
-                _blogs.Remove(idBlog);
-                result = $"Блог с идентификатором {idBlog} удалён";
-            }
-            catch (Exception ex)
-            {
-                result = $"Ошибка удаления блога\n{ex.Message}";
-            }
+            _blogs.Remove(idBlog);
+            result = $"Блог с идентификатором {idBlog} удалён";
 
             return result;
         }

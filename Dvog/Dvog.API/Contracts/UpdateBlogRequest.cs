@@ -3,9 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Dvog.API.Contracts
 {
-    public class CreateBlogRequest
+    public class UpdateBlogRequest
     {
-        public CreateBlogRequest(string title, string text)
+        // Тут вопрос если я хочу изменить что-то одно, то ничего не сломается?
+        public UpdateBlogRequest(string title, string text)
         {
             Title = title;
             Text = text;
