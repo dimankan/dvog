@@ -2,53 +2,33 @@
 
 namespace Dvog.Domain
 {
-    public class Author
+    public record Author
     {
-        private Author(int id, string login, string password, string email, string phone, string firstName, string secondName, DateTime birthday, DateTime dateRegistr)
+        public const int MaxUserName = 20;
+        private Author(int id, string userName, DateTime dateRegistr)
         {
             Id = id;
-            Login = login;
-            Password = password;
-            Email = email;
-            Phone = phone;
-            FirstName = firstName;
-            SecondName = secondName;
-            Birthday = birthday;
+            UserName = userName;
             DateRegistr = dateRegistr;
         }
 
-        public int Id { get; set; }
+        public int Id { get; init; }
 
-        public string Login { get; }
+        public string UserName { get; }
 
-        public string Password { get; }
+        public DateTime DateRegistr { get; init; }
 
-        public string Email { get; }
+        public DateTime DateLastUpdate { get; init; }
 
-        public string Phone { get; }
-
-        public string FirstName { get; }
-
-        public string SecondName { get; }
-
-        public DateTime Birthday { get; }
-
-        public DateTime DateRegistr { get; }
-
-        public static Result<Author> Create(string login, string password, string email, string phone, string firstName, string secondName, DateTime birthday)
+        public static Result<Author> Create(string userName)
         {
-            if (string.IsNullOrWhiteSpace(login))
+            if (string.IsNullOrWhiteSpace(userName))
             {
                 return Result.Failure<Author>("Логин не может быть пустым");
             }
 
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                return Result.Failure<Author>("Пароль не может быть пустым");
-            }
-
-            var blog = new Author(0, login, password, email, phone, firstName, secondName, birthday, DateTime.Now);
-            return blog;
+            var author = new Author(0, userName, DateTime.Now);
+            return author;
         }
     }
 }
