@@ -3,6 +3,22 @@ version: '3.4'
 services:
   dvog.api:
     image: ${DOCKER_REGISTRY-}dvogapi
+    container_name: api
     build:
       context: .
       dockerfile: Dvog.API/Dockerfile
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+        POSTGRES_PASSWORD: pwd
+    ports:
+        - 5433:5432
+    container_name: db
+    volumes:
+        - db-data:/var/lib/postgresql/data 
+
+volumes:
+  db-data:
+    driver: local
