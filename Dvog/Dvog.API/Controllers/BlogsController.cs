@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using Dvog.API.Contracts;
+using Dvog.DataAccess;
 using Dvog.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace Dvog.API.Controllers
     public class BlogsController : ControllerBase
     {
         private readonly ILogger<BlogsController> _logger;
+        private readonly DvogDbContext _dbContext;
 
-        public BlogsController(ILogger<BlogsController> logger)
+        public BlogsController(ILogger<BlogsController> logger, DvogDbContext dbContext)
         {
             _logger = logger;
+            _dbContext = dbContext;
         }
 
         [HttpPost]
@@ -76,7 +79,7 @@ namespace Dvog.API.Controllers
     public static class BlogsRepository
     {
         private static int _latestId = 0;
-        private static Dictionary<int, Blog> _blogs = new Dictionary<int, Blog>();
+        private static Dictionary<int, Domain.Blog> _blogs = new Dictionary<int, Blog>();
 
         public static int Add(Blog newBlog)
         {

@@ -1,5 +1,4 @@
-﻿using Dvog.Domain;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Dvog.API.Contracts
 {
