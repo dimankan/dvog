@@ -1,5 +1,7 @@
 using Dvog.API.Controllers;
 using Dvog.DataAccess;
+using Dvog.DataAccess.Repositories;
+using Dvog.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +23,14 @@ builder.Services.AddScoped<ModelServiceA>(x =>
 builder.Services.AddScoped<ModelServiceB>();
 builder.Services.AddTransient<ModelRepositoryA>();
 builder.Services.AddScoped<ModelRepositoryB>();
-builder.Host.UseDefaultServiceProvider(options => options.ValidateOnBuild = true);
+builder.Services.AddScoped<IBlogsRepository, BlogsRepository>();
+builder.Services.AddAutoMapper(x => x.AddProfile<MappingProfile>());
+builder.Host.UseDefaultServiceProvider(options =>
+{
+    options.ValidateOnBuild = true;
+    options.ValidateScopes = true;
+}
+);
 
 var app = builder.Build();
 
