@@ -13,6 +13,7 @@ builder.Services.AddControllers().AddControllersAsServices();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddScoped<ModelServiceA>(x =>
 {
     var repositoryA = x.GetRequiredService<ModelRepositoryA>();
@@ -23,7 +24,13 @@ builder.Services.AddScoped<ModelServiceA>(x =>
 builder.Services.AddScoped<ModelServiceB>();
 builder.Services.AddTransient<ModelRepositoryA>();
 builder.Services.AddScoped<ModelRepositoryB>();
+
+//builder.Services.AddSingleton<IAuthorsRepository, AuthorsRepositoryStatic>();
+builder.Services.AddScoped<IAuthorsRepository, AuthorsRepository>();
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 builder.Services.AddScoped<IBlogsRepository, BlogsRepository>();
+
 builder.Services.AddAutoMapper(x => x.AddProfile<MappingProfile>());
 builder.Host.UseDefaultServiceProvider(options =>
 {
@@ -46,6 +53,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 app.Run();
 

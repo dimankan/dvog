@@ -13,6 +13,7 @@ namespace Dvog.DataAccess
         public MappingProfile()
         {
             CreateMap<Blog, Domain.Blog>().ReverseMap();
+            CreateMap<Author, Domain.Author>().ReverseMap();
         }
     }
 }
