@@ -8,10 +8,10 @@ namespace Dvog.Domain.Repositories
 
         string Delete(int idBlog);
 
-        string Get(int idBlog);
+        Blog Get(int idBlog);
 
         Blog[] GetAll();
 
-        string Update(int idBlog, Result<Blog> updatedBlog);
+        Blog Update(int idBlog, Result<Blog> updatedBlog);
     }
 }
