@@ -40,7 +40,13 @@ namespace Dvog.API.Controllers
             _logger.LogInformation("Начало получения всех блогов");
 
             var result = _authorsRepository.GetAll();
-            return Ok(result);
+            if (result.IsFailure)
+            {
+                _logger.LogError(result.Error);
+                return BadRequest(result.Error);
+            }
+
+            return Ok(result.Value);
         }
 
         [HttpGet("{authorId:int}")]
@@ -49,8 +55,13 @@ namespace Dvog.API.Controllers
             _logger.LogInformation($"Начало получения конкретного автора с идентификатором: {authorId}");
 
             var result = _authorsRepository.Get(authorId);
+            if (result.IsFailure)
+            {
+                _logger.LogError(result.Error);
+                return BadRequest(result.Error);
+            }
 
-            return Ok(result);
+            return Ok(result.Value);
         }
 
         [HttpPut("{authorId:int}")]
@@ -59,9 +70,14 @@ namespace Dvog.API.Controllers
             _logger.LogInformation($"Начало обновления конкретного автора с идентификатором: {authorId}");
 
             var updatedAuthor = Author.Create(request.UserName);
-            var result = _authorsRepository.Update(authorId, updatedAuthor);
+            var result = _authorsRepository.Update(authorId, updatedAuthor.Value);
+            if (result.IsFailure)
+            {
+                _logger.LogError(result.Error);
+                return BadRequest(result.Error);
+            }
 
-            return Ok(result);
+            return Ok(result.Value);
         }
 
         [HttpDelete("{authorId:int}")]
@@ -70,8 +86,13 @@ namespace Dvog.API.Controllers
             _logger.LogInformation($"Начало удаления конкретного автора с идентификатором: {authorId}");
 
             var result = _authorsRepository.Delete(authorId);
+            if (result.IsFailure)
+            {
+                _logger.LogError(result.Error);
+                return BadRequest(result.Error);
+            }
 
-            return Ok(result);
+            return Ok(result.Value);
         }
     }
 }

@@ -1,4 +1,5 @@
 using Dvog.Domain;
+using Dvog.UnitTests.Helpers;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -21,7 +22,7 @@ public class BlogTests
         Assert.False(blogResult.IsFailure);
     }
 
-    [Theory]
+    [Theory] // 
     //[InlineData("title", "")]
     //[InlineData("", "text")]
     //[InlineData("", "")]
@@ -39,35 +40,12 @@ public class BlogTests
         Assert.True(blogResult.IsFailure);
     }
 
-    private static IEnumerable<object[]> Generate()
+    public static IEnumerable<object[]> Generate()
     {
         for (int i = 0; i < 10; i++)
         {
             yield return new[] { string.Empty, Guid.NewGuid().ToString() };
-            yield return new[] { Guid.NewGuid().ToString(), string.Empty }; 
+            yield return new[] { Guid.NewGuid().ToString(), string.Empty };
         }
-    }
-
-    public static string GenerateString(int lengthString)
-    {
-        string result = String.Empty;
-
-        char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuwxyz".ToCharArray();
-        char[] numbers = "0123456789".ToCharArray();
-        char[] symbols = ";.,-_".ToCharArray();
-
-        List<char> list = new List<char>();
-        list.AddRange(letters);
-        list.AddRange(numbers);
-        list.AddRange(symbols);
-
-        Random rand = new Random();
-
-        for (int i = 0; i < lengthString; i++)
-        {
-            result += list[rand.Next(0, list.Count - 1)];
-        }
-
-        return result;
     }
 }

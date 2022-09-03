@@ -7,12 +7,12 @@ namespace Dvog.Domain.Repositories
     {
         int Add(Author newAuthor);
 
-        string Delete(int idAccount);
+        Result<string> Delete(int accountId);
 
-        Author Get(int idAccount);
+        Result<Author> Get(int accountId);
 
-        Author[] GetAll();
+        Result<Author[]> GetAll();
 
-        Author Update(int idAccount, Result<Author> updateAuthor);
+        Result<Author> Update(int accountId, Author updateAuthor);
     }
 }

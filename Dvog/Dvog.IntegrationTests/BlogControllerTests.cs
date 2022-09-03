@@ -13,7 +13,7 @@ public class BlogControllerTests : BaseControllerTests
     {
     }
 
-    [Fact]
+    [Fact] // Тест конкретного действия
     public async Task Create_ShouldReturnOK()
     {
         // Arrange

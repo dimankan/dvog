@@ -1,6 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 
 namespace Dvog.Domain;
+
+// Domain - сущности предметной области.
 public record Blog
 {
     public const int MaxTitleLength = 200;

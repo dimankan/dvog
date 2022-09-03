@@ -12,6 +12,9 @@ namespace Dvog.IntegrationTests
             Client = application.CreateDefaultClient(new LoggingHandler(outputHelper));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected HttpClient Client { get; }
     }
 }
