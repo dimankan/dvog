@@ -8,8 +8,8 @@ namespace Dvog.DataAccess.Entities
 
         public string UserName { get; set; }
 
-        public DateTime DateRegistr { get; set; }
+        public DateTime CreatedDate { get; set; }
 
-        public DateTime DateLastUpdate { get; set; }
+        public DateTime LastUpdateDate { get; set; }
     }
 }

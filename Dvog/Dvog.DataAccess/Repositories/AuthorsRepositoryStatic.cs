@@ -27,52 +27,52 @@ namespace Dvog.DataAccess.Repositories
 
             foreach (var item in _authors)
             {
-                result += $"\nId: {item.Value.Id}\nUserName: {item.Value.UserName}.\nДата регистрации: {item.Value.DateRegistr}\n---Конец информации о пользователе---\n\n";
+                result += $"\nId: {item.Value.Id}\nUserName: {item.Value.UserName}.\nДата регистрации: {item.Value.CreatedDate}\n---Конец информации о пользователе---\n\n";
             }
 
             return result;
         }
 
-        public string Get(int idAccount)
+        public string Get(int accountId)
         {
             string result = string.Empty;
 
-            if (!_authors.TryGetValue(idAccount, out var author))
+            if (!_authors.TryGetValue(accountId, out var author))
             {
-                return $"Автора с идентификатором {idAccount} не существует";
+                return $"Автора с идентификатором {accountId} не существует";
             }
 
-            result += $"\nId: {author.Id}\nUserName: {author.UserName}.\nДата регистрации: {author.DateRegistr}\n---Конец информации о пользователе---\n\n";
+            result += $"\nId: {author.Id}\nUserName: {author.UserName}.\nДата регистрации: {author.CreatedDate}\n---Конец информации о пользователе---\n\n";
             return result;
         }
 
-        public string Update(int idAccount, Result<Author> updateAuthor)
+        public string Update(int accountId, Result<Author> updateAuthor)
         {
             string result = string.Empty;
 
-            if (!_authors.TryGetValue(idAccount, out var author))
+            if (!_authors.TryGetValue(accountId, out var author))
             {
-                return $"Автора с идентификатором {idAccount} не существует";
+                return $"Автора с идентификатором {accountId} не существует";
             }
 
-            _authors[idAccount] = updateAuthor.Value with { Id = author.Id, DateRegistr = author.DateRegistr, DateLastUpdate = DateTime.Now };
+            _authors[accountId] = updateAuthor.Value with { Id = author.Id, CreatedDate = author.CreatedDate, LastUpdateDate = DateTime.UtcNow };
 
-            result = $"Автор с идентификатором {idAccount} обновлен";
+            result = $"Автор с идентификатором {accountId} обновлен";
 
             return result;
         }
 
-        public string Delete(int idAccount)
+        public string Delete(int accountId)
         {
             string result = string.Empty;
 
-            if (!_authors.ContainsKey(idAccount))
+            if (!_authors.ContainsKey(accountId))
             {
-                return $"Автора с идентификатором {idAccount} не существует";
+                return $"Автора с идентификатором {accountId} не существует";
             }
 
-            _authors.Remove(idAccount);
-            result = $"Автор с идентификатором {idAccount} удалён";
+            _authors.Remove(accountId);
+            result = $"Автор с идентификатором {accountId} удалён";
 
             return result;
         }

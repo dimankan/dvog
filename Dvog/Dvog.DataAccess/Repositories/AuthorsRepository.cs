@@ -20,32 +20,47 @@ namespace Dvog.DataAccess.Repositories
 
         public int Add(Author newAuthor)
         {
-            var author = new Entities.Author() { UserName = newAuthor.UserName, DateRegistr = DateTime.Now, DateLastUpdate = DateTime.Now };
+            var author = new Entities.Author() { UserName = newAuthor.UserName, CreatedDate = DateTime.UtcNow, LastUpdateDate = DateTime.Now };
             _dbContext.Authors.Add(author);
             _dbContext.SaveChanges();
 
             return author.Id;
         }
 
-        public Author[] GetAll()
+        public Result<Author[]> GetAll()
         {
-            var autors = _dbContext.Authors.AsNoTracking().ToArray();
-            return _mapper.Map<Entities.Author[], Author[]>(autors);
+            var authors = _dbContext.Authors.AsNoTracking().ToArray();
+
+            if (authors == null)
+            {
+                return Result.Failure<Author[]>("Авторы недоступны");
+            }
+
+            return _mapper.Map<Entities.Author[], Author[]>(authors);
         }
 
-        public Author Get(int idAccount)
+        public Result<Author> Get(int accountId)
         {
-            var author = _dbContext.Authors.AsNoTracking().SingleOrDefault(x => x.Id == idAccount);
+            var author = _dbContext.Authors.SingleOrDefault(x => x.Id == accountId);
+            if (author == null)
+            {
+                return Result.Failure<Author>("Автор недоступен");
+            }
+
             return _mapper.Map<Entities.Author, Author>(author);
         }
 
-        public Author Update(int idAccount, Result<Author> updateAuthor)
+        public Result<Author> Update(int accountId, Author updateAuthor)
         {
-            var author = _dbContext.Authors.AsNoTracking().SingleOrDefault(x => x.Id == idAccount);
+            var author = _dbContext.Authors.SingleOrDefault(x => x.Id == accountId);
 
-            author.UserName = updateAuthor.Value.UserName;
-            author.DateLastUpdate = DateTime.Now;
-            // Тут дата регистрации по часам прыгает при каждом обновлении
+            if (author == null)
+            {
+                return Result.Failure<Author>("Автор не найден");
+            }
+
+            author.UserName = updateAuthor.UserName;
+            author.LastUpdateDate = DateTime.UtcNow;
 
             _dbContext.Update(author);
             _dbContext.SaveChanges();
@@ -53,9 +68,14 @@ namespace Dvog.DataAccess.Repositories
             return _mapper.Map<Entities.Author, Author>(author);
         }
 
-        public string Delete(int idAccount)
+        public Result<string> Delete(int idAccount)
         {
             var author = _dbContext.Authors.AsNoTracking().SingleOrDefault(x => x.Id == idAccount);
+
+            if (author == null)
+            {
+                return Result.Failure<string>("Автор не найден");
+            }
 
             _dbContext.Remove(author);
             _dbContext.SaveChanges();

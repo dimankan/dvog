@@ -4,11 +4,17 @@ using Dvog.DataAccess.Repositories;
 using Dvog.Domain;
 using Dvog.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Net.Mime;
 
+// Контроллер - это обработчик Http запросов
 namespace Dvog.API.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
+    // Атрибуты для контроллера под Апи
+    [ApiController]// Разделение МVC от API контроллера
+    [Route("[controller]")] // "Роуты" - путь до экшена. Уникальны.
+    [Produces(MediaTypeNames.Application.Json)] // Отправитель: json
+    [Consumes(MediaTypeNames.Application.Json)] // Получает: json
     public class BlogsController : ControllerBase
     {
         private readonly ILogger<BlogsController> _logger;
@@ -19,7 +25,13 @@ namespace Dvog.API.Controllers
             _logger = logger;
             _blogRepository = repository;
         }
-
+        
+        /// <summary>
+        /// Позволяет создать новый блог.
+        /// </summary>
+        /// <remarks>Более подробное описание процедуры создания нового блога</remarks>
+        /// <param name="request">Модель позволяющий передать информацию о новом блоге</param>
+        /// <returns>Возвращает идентификатор нового блога</returns>
         [HttpPost]
         public async Task<IActionResult> Create(CreateBlogRequest request)
         {
@@ -45,6 +57,8 @@ namespace Dvog.API.Controllers
         }
 
         [HttpGet("{blogId:int}")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Blog))] // Зависимость статус кода и возвращаемого типа
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Get([FromRoute] int blogId)
         {
             _logger.LogInformation($"Начало получения конкретного блога с идентификатором: {blogId}");
@@ -55,7 +69,7 @@ namespace Dvog.API.Controllers
         }
 
         [HttpPut("{blogId:int}")]
-        public async Task<IActionResult> Update([FromRoute] int blogId, UpdateBlogRequest request)
+        public async Task<IActionResult> Update([FromRoute] int blogId, [FromBody] UpdateBlogRequest request)
         {
             _logger.LogInformation($"Начало обновления конкретного блога с идентификатором: {blogId}");
 

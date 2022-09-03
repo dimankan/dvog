@@ -12,7 +12,11 @@ builder.Services.AddDbContext<DvogDbContext>(x => x.UseNpgsql(builder.Configurat
 builder.Services.AddControllers().AddControllersAsServices();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(x =>
+{
+    var filePath = Path.Combine(System.AppContext.BaseDirectory, "Dvog.API.xml");
+    x.IncludeXmlComments(filePath);
+});
 
 builder.Services.AddScoped<ModelServiceA>(x =>
 {
@@ -36,8 +40,7 @@ builder.Host.UseDefaultServiceProvider(options =>
 {
     options.ValidateOnBuild = true;
     options.ValidateScopes = true;
-}
-);
+});
 
 var app = builder.Build();
 
