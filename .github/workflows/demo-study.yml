@@ -1,0 +1,57 @@
+# Краткое описание что где когда
+
+# Название экшена[опционально]. не надо тут пробелов
+name: demo-study
+
+# Внешняя переменная
+env:
+  myGlobalVar : "MyGlobalValue"
+
+
+# Когда возникает экшен
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+# Выполняемые задачи
+jobs:
+  # Название задачи [опционально]
+  testing:
+    # Где выполняется
+    runs-on: ubuntu-latest
+    
+    # Шаги задачи( в каждом шагу название 'name' + запуск 'run')
+    steps:
+    - name: Выполнение одной команде в шаге
+      run : echo "Hello World from Testing job"
+      
+    - name: Выполнение нескольких команд в шаге
+      run: | 
+        echo "Привет!"
+        echo "Как дела?"
+    
+    - name: Использование внешней переменной
+      run:  echo "Value global - ${{env.myGlobalVar}}"
+      
+    - name: Копирование репозитория
+      uses: actions/checkout@v1   
+  
+    - name: Показать содержимое репозитория
+      run : ls -la
+  
+  secondJobs:
+    runs-on: ubuntu-latest
+    needs: [testing]
+    env:
+      VAR1 : "Внутренняя переменная джоба"
+          
+    steps:
+    - name: Print env vars
+      run : |
+        echo "Var1 = ${{ env.VAR1 }}"
+        echo "Var2 = $LOCAL_VAR"
+      env:
+        LOCAL_VAR: "Локальная переменная"
+      
