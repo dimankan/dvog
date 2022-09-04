@@ -21,5 +21,36 @@ jobs:
       run: dotnet restore Dvog/Dvog.sln
     - name: Build
       run: dotnet build --no-restore Dvog/Dvog.sln
+
+      
+  unit_tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
     - name: Test
-      run: dotnet test --no-build --verbosity normal Dvog/Dvog.sln
+      run: dotnet test --verbosity normal Dvog\Dvog.UnitTests\Dvog.UnitTests.csproj
+  
+  
+  integration_tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup PostgreSQL
+      uses: Harmon758/postgresql-action@v1.0.0
+      with:
+          postgresql db: DvogDb
+          postgresql password: pwd
+
+    - name: tool restore
+      run: dotnet tool restore --tool-manifest Dvog\.config\dotnet-tools.json
+      
+    - name: update database
+      run: dotnet ef database update -p Dvog/Dvog.DataAccess -s Dvog/Dvog.API
+    
+    - name: Test
+      run: dotnet test -verbosity normal Dvog/Dvog.IntegrationTests/Dvog.IntegrationTests.csproj
+  
+  
+      
+      
