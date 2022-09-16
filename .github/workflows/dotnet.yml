@@ -46,7 +46,7 @@ jobs:
       run: dotnet tool restore --tool-manifest Dvog/.config/dotnet-tools.json
       
     - name: update database
-      run: dotnet ef database update -p Dvog.DataAccess -s Dvog.API
+      run: dotnet ef database update -p Dvog/Dvog.DataAccess -s Dvog/Dvog.API
     
     - name: Test
       run: dotnet test --verbosity normal Dvog/Dvog.IntegrationTests/Dvog.IntegrationTests.csproj
