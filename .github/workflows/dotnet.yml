@@ -49,7 +49,7 @@ jobs:
       run: dotnet ef database update -p Dvog/Dvog.DataAccess -s Dvog/Dvog.API
     
     - name: Test
-      run: dotnet test -verbosity normal Dvog/Dvog.IntegrationTests/Dvog.IntegrationTests.csproj
+      run: dotnet test --verbosity normal Dvog/Dvog.IntegrationTests/Dvog.IntegrationTests.csproj
   
   
       
