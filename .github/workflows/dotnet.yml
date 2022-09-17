@@ -43,7 +43,7 @@ jobs:
           postgresql password: pwd
 
     - name: tool restore
-      run: dotnet tool restore --tool-manifest Dvog/.config/dotnet-tools.json
+      run: dotnet tool restore
       
     - name: update database
       run: dotnet ef database update -p Dvog/Dvog.DataAccess -s Dvog/Dvog.API
